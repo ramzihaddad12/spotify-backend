@@ -23,7 +23,7 @@ app.use(session({
 // }));
 app.use(cors({
     credentials: true,
-    origin: 'https://flourishing-tanuki-d1c818.netlify.app/'
+    origin: 'https://flourishing-tanuki-d1c818.netlify.app'
 }));
 app.set('trust proxy', 1)
 // sess.cookie.secure = true;

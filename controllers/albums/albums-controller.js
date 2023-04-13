@@ -53,14 +53,12 @@ const getAlbumById = async (req, res) => {
 
 };
 const getAlbumSongsById = async (req, res) => {
-    console.log("here")
     try {
         const album = await Album.findById(req.params.id);
         if (!album) {
             return res.status(404).send('Album not found');
         }
         const songs = await Song.find({"albumId": req.params.id});
-        // console.log(songs);
         res.status(200).json(songs);
     } catch (err) {
         console.error(err);
@@ -116,18 +114,12 @@ const getAllSortedAlbums = async (req, res) => {
 }
 
 const searchAlbumByName = async (req, res) => {
-    console.log("searching...")
     try {
         const query = req.query.name;
-        console.log(query);
         const artists = await User.find({ name: { $regex: query, $options: 'i' }, userType: "artist" }).select('_id');
 
         const artistIds = artists.map(artist => artist._id);
-        console.log("artistIds");
-        console.log(artistIds);
         const albums = await Album.find({ artistId: { $in: artistIds } });
-
-        console.log(albums)
         res.json(albums);
     } catch (error) {
         console.error(error);

@@ -17,14 +17,14 @@ app.use(session({
     secret: 'sdlfjljrowuroweu',
     cookie: { secure: false }
 }));
-// app.use(cors({
-//     credentials: true,
-//     origin: 'http://localhost:3000'
-// }));
 app.use(cors({
     credentials: true,
-    origin: 'https://flourishing-tanuki-d1c818.netlify.app'
+    origin: 'http://localhost:3000'
 }));
+// app.use(cors({
+//     credentials: true,
+//     origin: 'https://flourishing-tanuki-d1c818.netlify.app'
+// }));
 app.set('trust proxy', 1)
 // sess.cookie.secure = true;
 

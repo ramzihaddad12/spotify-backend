@@ -6,14 +6,12 @@ import User from "../../models/user.js";
 import mongoose from 'mongoose';
 
 const createSong = async (req, res) => {
-    console.log(req.body);
     const userId = req.params.userId;
 
 
     try {
         // get username
         const user = await User.findById(userId);
-        console.log(user);
         const userName = user.name;
         // Check if the album exists
         const album = await Album.findById(req.body.albumId);
@@ -106,8 +104,6 @@ const deleteSong = async (req, res) => {
 };
 
 const getSongById = async (req, res) => {
-    console.log("req.params.songId");
-    console.log(req.params.songId);
     // Check if songId is a valid ObjectId
     if (mongoose.Types.ObjectId.isValid(req.params.songId)) {
         try {

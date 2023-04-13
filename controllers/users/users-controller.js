@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import User from '../../models/user.js';
 import Like from "../../models/like.js";
 import Follow from "../../models/follow.js";
+import Song from "../../models/song.js";
 const logInUser = async (req, res) => {
     try {
         // Find user in the database
@@ -109,18 +110,22 @@ const deleteUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-    console.log("UPDATING USERRRRRR");
-    console.log(req.body);
     try {
+        const old_user = await User.findById(req.params.id);
+        const old_name = old_user.name;
+
         const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        console.log('updated user');
-        console.log(user)
         if (!user) {
             return res.status(404).send('User not found');
         }
+
+
         res.status(200).json(user);
         req.session["profile"] = user;
         req.session.save();
+
+        // update songs created by user
+        await Song.updateMany({ "artists.name": old_name }, { $set: { "artists.$[elem].name": user.name }}, { arrayFilters: [{ "elem.name": old_name }] });
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');
@@ -128,8 +133,6 @@ const updateUser = async (req, res) => {
 }
 
 const likeSong = async (req, res) => {
-    console.log("req.params.userId");
-    console.log(req.params.userId);
     try {
         const user = await User.findById(req.params.userId);
         if (req.session["profile"]._id != req.params.userId) {
@@ -163,7 +166,6 @@ const checkIfUserLikedSong = async (req, res) => {
     const like = await Like.findOne({ user: req.params.userId, song: req.params.songId });
 
     if (like) {
-        console.log(req.params.songId);
         res.send({ message: true });
     } else {
         // The user did not like the song
@@ -173,58 +175,41 @@ const checkIfUserLikedSong = async (req, res) => {
 
 const getLikedSongsForUser = async (req, res) => {
     if (req.params.userId === undefined) {
-        console.log("here")
         res.json([]);
     }
     const likedSongs = await Like.find({ user: req.params.userId });
     const likedSongIds = likedSongs.map((like) => like.song.toString());
-
-    console.log(likedSongIds);
 
     res.json(likedSongIds);
 
 }
 
 const getFollowingForUser = async (req, res) => {
-    console.log("getFollowingForUser")
 
     if (req.params.userId === undefined) {
-        console.log("here")
         res.json([]);
     }
     const following = await Follow.find({ user: req.params.userId });
-    console.log("following");
-    console.log(following);
     const result = following.map((fol) => fol.following.toString());
-
-    console.log(result);
 
     res.json(result);
 
 }
 
 const getFollowersForUser = async (req, res) => {
-    console.log("getFollowersForUser")
 
     if (req.params.userId === undefined) {
-        console.log("here")
         res.json([]);
     }
     const followers = await Follow.find({ following: req.params.userId });
-    console.log("followers");
-    console.log(followers);
     const result = followers.map((fol) => fol.user.toString());
 
-    console.log(result);
-
     res.json(result);
-
 }
 
 
 const followUser = async (req, res) => {
-    console.log("req.params.userId");
-    console.log(req.params.userId);
+
     try {
         const user = await User.findById(req.params.userId);
         if (req.session["profile"]._id != req.params.userId) {
@@ -255,7 +240,6 @@ const followUser = async (req, res) => {
 }
 
 const checkFollow = async (req, res) => {
-    console.log("checkFollow")
     const follow = await Follow.findOne({ user: req.params.userId, following: req.params.followId });
 
     if (follow) {
@@ -269,13 +253,7 @@ const checkFollow = async (req, res) => {
 
 const getNumberOfLikesForSong = async (req, res) => {
     const likeCount = await Like.countDocuments({ song: req.params.songId });
-
-    console.log("likeCount");
-
-    console.log(likeCount);
-
     res.json(likeCount);
-
 }
 
 const UserController = (app) => {

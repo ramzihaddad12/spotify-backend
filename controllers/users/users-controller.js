@@ -34,6 +34,9 @@ const logInUser = async (req, res) => {
 };
 
 const getProfile = async (req, res) => {
+    console.log("req.session['profile']");
+    console.log(req.session['profile']);
+
     res.json(req.session['profile']);
 }
 const getUserById = async (req, res) => {

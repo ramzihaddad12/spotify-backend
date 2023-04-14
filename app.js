@@ -16,7 +16,7 @@ const app = express();
 //     secret: 'sdlfjljrowuroweu',
 //     cookie: { secure: false },
 // }));
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 
 app.use(
     session({

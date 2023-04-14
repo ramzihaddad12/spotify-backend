@@ -184,6 +184,19 @@ const getLikedSongsForUser = async (req, res) => {
 
 }
 
+const getUsersWhoLikedSong = async (req, res) => {
+    if (req.params.songId === undefined) {
+        res.json([]);
+    }
+    const likedSongs = await Like.find({ song: req.params.songId });
+    const userIds = likedSongs.map((like) => like.user);
+
+    const users = await User.find({ _id: { $in: userIds } });
+
+    res.json(users);
+
+}
+
 const getFollowingForUser = async (req, res) => {
 
     if (req.params.userId === undefined) {
@@ -196,6 +209,21 @@ const getFollowingForUser = async (req, res) => {
 
 }
 
+const getFollowingAllForUser = async (req, res) => {
+
+    if (req.params.userId === undefined) {
+        res.json([]);
+    }
+    const following = await Follow.find({ user: req.params.userId });
+    const following_ids = following.map((fol) => fol.following.toString());
+
+    console.log(following_ids);
+    const users = await User.find({_id: { $in: following_ids }});
+    console.log(users);
+    res.json(users);
+
+}
+
 const getFollowersForUser = async (req, res) => {
 
     if (req.params.userId === undefined) {
@@ -205,6 +233,18 @@ const getFollowersForUser = async (req, res) => {
     const result = followers.map((fol) => fol.user.toString());
 
     res.json(result);
+}
+const getFollowersAllForUser = async (req, res) => {
+
+    if (req.params.userId === undefined) {
+        res.json([]);
+    }
+
+    const followers = await Follow.find({ following: req.params.userId });
+    const follower_ids = followers.map((fol) => fol.user.toString());
+    console.log(follower_ids);
+    const users = await User.find({_id: { $in: follower_ids }});
+    res.json(users);
 }
 
 
@@ -265,12 +305,17 @@ const UserController = (app) => {
     app.post('/api/users/:userId/likeSong', likeSong);
     app.get('/api/users/:userId/checkLike/:songId', checkIfUserLikedSong);
     app.get('/api/users/:userId/likedSongs', getLikedSongsForUser);
+    app.get('/api/users/:songId/usersLikedSong', getUsersWhoLikedSong);
+
     app.get('/api/likes/:songId/numOflikes', getNumberOfLikesForSong);
 
     app.post('/api/users/:userId/follow', followUser);
     app.get('/api/users/:userId/checkFollow/:followId', checkFollow);
     app.get('/api/users/following/:userId', getFollowingForUser);
     app.get('/api/users/followers/:userId', getFollowersForUser);
+
+    app.get('/api/users/following/all/:userId', getFollowingAllForUser);
+    app.get('/api/users/followers/all/:userId', getFollowersAllForUser);
 
 
     app.get('/api/users', getAllUsers)

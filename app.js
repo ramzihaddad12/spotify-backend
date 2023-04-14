@@ -12,10 +12,10 @@ const app = express();
 app.set('trust proxy', 1);
 app.use(express.json());
 app.use(session({
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     secret: 'sdlfjljrowuroweu',
-    cookie: { secure: false },
+    cookie: { secure: true },
 }));
 app.use(cors({
     credentials: true,

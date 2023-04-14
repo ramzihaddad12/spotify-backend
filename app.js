@@ -16,16 +16,16 @@ const app = express();
 //     secret: 'sdlfjljrowuroweu',
 //     cookie: { secure: false },
 // }));
+app.set('trust proxy', 1);
 
 app.use(
     session({
         secret: "any string",
-        resave: true,
+        resave: false,
         saveUninitialized: true,
         cookie: { secure: true },
     })
 );
-// app.set('trust proxy', 1);
 
 app.use(cors({
     credentials: true,

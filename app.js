@@ -20,8 +20,9 @@ const app = express();
 app.use(
     session({
         secret: "any string",
-        resave: false,
+        resave: true,
         saveUninitialized: true,
+        cookie: { secure: false },
     })
 );
 // app.set('trust proxy', 1);

@@ -12,7 +12,7 @@ const app = express();
 app.set('trust proxy', 1);
 app.use(express.json());
 app.use(session({
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     secret: 'sdlfjljrowuroweu',
     cookie: { secure: false },

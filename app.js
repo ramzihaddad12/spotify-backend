@@ -14,19 +14,19 @@ app.use(express.json());
 app.use(session({
     resave: false,
     saveUninitialized: true,
-    secret: 'sdlfjljrowuroweu',
+    secret: 'my-secret',
     cookie: { secure: false }
-}));
-app.use(cors({
-    credentials: true,
-    origin: 'http://localhost:3000'
 }));
 // app.use(cors({
 //     credentials: true,
-//     origin: 'https://flourishing-tanuki-d1c818.netlify.app'
+//     origin: 'http://localhost:3000'
 // }));
+app.use(cors({
+    credentials: true,
+    origin: 'https://flourishing-tanuki-d1c818.netlify.app'
+}));
 app.set('trust proxy', 1)
-// sess.cookie.secure = true;
+sess.cookie.secure = true;
 
 
 mongoose.connect('mongodb+srv://Cluster21145:Cluster21145@cluster21145.yc3qyis.mongodb.net/test', { useNewUrlParser: true });

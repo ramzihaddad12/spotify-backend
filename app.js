@@ -7,7 +7,7 @@ import UserController from "./controllers/users/users-controller.js"
 import SongsController from "./controllers/songs/songs-controller.js";
 import AlbumsController from "./controllers/albums/albums-controller.js";
 import PlaylistController from "./controllers/playlist/playlist-controller.js";
-
+import MongoStore from "connect-mongo";
 const app = express();
 
 // app.use(session({
@@ -20,6 +20,10 @@ app.set('trust proxy', 1);
 
 app.use(
     session({
+        store: MongoStore.create({
+            mongoUrl: 'mongodb+srv://Cluster21145:Cluster21145@cluster21145.yc3qyis.mongodb.net/test',
+            ttl: 14 * 24 * 60 * 60 // See below for details
+        })
         secret: "any string",
         resave: false,
         saveUninitialized: true,

@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import session from 'express-session';
+import session from 'cookie-session';
 import mongoose from 'mongoose';
 import SessionController from "./controllers/sessions/sessions-controller.js";
 import UserController from "./controllers/users/users-controller.js"

@@ -11,11 +11,23 @@ import PlaylistController from "./controllers/playlist/playlist-controller.js";
 const app = express();
 app.set('trust proxy', 1);
 app.use(express.json());
+// app.use(session({
+//     resave: false,
+//     saveUninitialized: true,
+//     secret: 'sdlfjljrowuroweu',
+//     cookie: { secure: false },
+// }));
+app.set('trust proxy', 1);
+
 app.use(session({
-    resave: false,
+    cookie:{
+        secure: true,
+        maxAge:60000
+    },
+    // store: new RedisStore(),
+    secret: 'secret',
     saveUninitialized: true,
-    secret: 'sdlfjljrowuroweu',
-    cookie: { secure: false },
+    resave: false
 }));
 app.use(cors({
     credentials: true,

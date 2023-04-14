@@ -24,13 +24,13 @@ app.use(
             url: 'mongodb+srv://Cluster21145:Cluster21145@cluster21145.yc3qyis.mongodb.net/test',
             ttl: 14 * 24 * 60 * 60, // session expiration time in seconds
             autoRemove: 'native', // automatically remove expired sessions
-            collectionName: 'your-collection-name' // collection name for the sessions
+            collectionName: 'sessions' // collection name for the sessions
         }),
         secret: "any string",
         resave: false,
         saveUninitialized: true,
         cookie: {
-            secure: (process.env.NODE_ENV && process.env.NODE_ENV == 'production') ? true:false
+            secure: true
         }
     })
 );

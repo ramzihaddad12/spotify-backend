@@ -22,7 +22,7 @@ app.use(
         secret: "any string",
         resave: true,
         saveUninitialized: true,
-        cookie: { secure: false },
+        cookie: { secure: true },
     })
 );
 // app.set('trust proxy', 1);

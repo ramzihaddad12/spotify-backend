@@ -15,7 +15,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     secret: 'sdlfjljrowuroweu',
-    cookie: { secure: true }
+    cookie: { secure: false }
 }));
 app.use(cors({
     credentials: true,

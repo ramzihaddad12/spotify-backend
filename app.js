@@ -30,7 +30,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 
 mongoose.connect('mongodb+srv://Cluster21145:Cluster21145@cluster21145.yc3qyis.mongodb.net/test', { useNewUrlParser: true });
 UserController(app)

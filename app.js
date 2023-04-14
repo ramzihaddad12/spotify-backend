@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
-import session from 'cookie-session';
+import session from 'express-session';
+import MemoryStore from 'memorystore'
 import mongoose from 'mongoose';
 import SessionController from "./controllers/sessions/sessions-controller.js";
 import UserController from "./controllers/users/users-controller.js"
@@ -15,7 +16,10 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     secret: 'sdlfjljrowuroweu',
-    cookie: { secure: false }
+    cookie: { secure: false },
+    store: new MemoryStore({
+        checkPeriod: 86400000 // prune expired entries every 24h
+    }),
 }));
 app.use(cors({
     credentials: true,

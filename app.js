@@ -20,10 +20,11 @@ app.set('trust proxy', 1);
 
 app.use(
     session({
-        store: MongoStore.create({
-            mongoUrl: 'mongodb+srv://Cluster21145:Cluster21145@cluster21145.yc3qyis.mongodb.net/test',
-            collection: "sessions",
-            ttl: 14 * 24 * 60 * 60 // See below for details
+        store: new MongoStore({
+            url: 'mongodb+srv://Cluster21145:Cluster21145@cluster21145.yc3qyis.mongodb.net/test',
+            ttl: 14 * 24 * 60 * 60, // session expiration time in seconds
+            autoRemove: 'native', // automatically remove expired sessions
+            collectionName: 'your-collection-name' // collection name for the sessions
         }),
         secret: "any string",
         resave: false,

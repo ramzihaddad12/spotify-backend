@@ -16,6 +16,7 @@ const app = express();
 //     secret: 'sdlfjljrowuroweu',
 //     cookie: { secure: false },
 // }));
+
 app.use(
     session({
         secret: "any string",
@@ -23,6 +24,7 @@ app.use(
         saveUninitialized: true,
     })
 );
+app.set('trust proxy', 1);
 
 app.use(cors({
     credentials: true,
@@ -30,7 +32,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// app.set('trust proxy', 1);
 
 mongoose.connect('mongodb+srv://Cluster21145:Cluster21145@cluster21145.yc3qyis.mongodb.net/test', { useNewUrlParser: true });
 UserController(app)

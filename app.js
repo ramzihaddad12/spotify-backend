@@ -15,11 +15,11 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     secret: 'sdlfjljrowuroweu',
-    cookie: { secure: true },
+    cookie: { secure: false },
 }));
 app.use(cors({
     credentials: true,
-    origin: 'https://flourishing-tanuki-d1c818.netlify.app'
+    origin: 'http://flourishing-tanuki-d1c818.netlify.app'// 'http://localhost:3000'//
 }));
 app.set('trust proxy', 1)
 

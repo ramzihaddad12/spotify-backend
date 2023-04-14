@@ -5,6 +5,7 @@ import Follow from "../../models/follow.js";
 import Song from "../../models/song.js";
 const logInUser = async (req, res) => {
     try {
+        console.log(req.body)
         // Find user in the database
         const user = await User.findOne({ email: req.body.email });
 

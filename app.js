@@ -28,7 +28,9 @@ app.use(
         secret: "any string",
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: true },
+        cookie: {
+            secure: (process.env.NODE_ENV && process.env.NODE_ENV == 'production') ? true:false
+        }
     })
 );
 

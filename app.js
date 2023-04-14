@@ -9,22 +9,22 @@ import AlbumsController from "./controllers/albums/albums-controller.js";
 import PlaylistController from "./controllers/playlist/playlist-controller.js";
 
 const app = express();
+app.enable('trust proxy')
+
 app.set('trust proxy', 1);
 app.use(express.json());
 app.use(session({
     resave: false,
     saveUninitialized: true,
     secret: 'my-secret',
-    cookie: { secure: false }
+    cookie: { secure: true }
 }));
-// app.use(cors({
-//     credentials: true,
-//     origin: 'http://localhost:3000'
-// }));
 app.use(cors({
     credentials: true,
     origin: 'https://flourishing-tanuki-d1c818.netlify.app'
 }));
+app.enable('trust proxy')
+
 app.set('trust proxy', 1)
 // sess.cookie.secure = true;
 

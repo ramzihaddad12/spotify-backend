@@ -23,7 +23,7 @@ app.use(
         store: MongoStore.create({
             mongoUrl: 'mongodb+srv://Cluster21145:Cluster21145@cluster21145.yc3qyis.mongodb.net/test',
             ttl: 14 * 24 * 60 * 60 // See below for details
-        })
+        }),
         secret: "any string",
         resave: false,
         saveUninitialized: true,

@@ -19,7 +19,7 @@ app.use(session({
 }));
 app.use(cors({
     credentials: true,
-    origin: 'http://flourishing-tanuki-d1c818.netlify.app'// 'http://localhost:3000'//
+    origin: 'https://flourishing-tanuki-d1c818.netlify.app'// 'http://localhost:3000'//
 }));
 app.set('trust proxy', 1)
 
